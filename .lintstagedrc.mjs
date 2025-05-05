@@ -1,7 +1,7 @@
 export default {
   '*.ts': [
     'prettier --write',
-    'tsc --noEmit --pretty',
+    'tsc-files --noEmit --pretty',
     'eslint --fix'
   ],
   '*.js': [

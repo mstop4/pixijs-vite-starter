@@ -1,24 +1,38 @@
-import './style.css';
-import typescriptLogo from './typescript.svg';
-import viteLogo from '/vite.svg';
-import { setupCounter } from './counter';
+import './index.css';
+import { Application, Assets, Sprite } from 'pixi.js';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`;
+const init = async () => {
+  // Create a new application
+  const app = new Application();
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!);
+  // Initialize the application
+  await app.init({ background: '#1099bb', width: 800, height: 600 });
+
+  // Append the application canvas to the document body
+  document.body.appendChild(app.canvas);
+
+  // Load the bunny texture
+  const texture = await Assets.load('https://pixijs.com/assets/bunny.png');
+
+  // Create a bunny Sprite
+  const bunny = new Sprite(texture);
+
+  // Center the sprite's anchor point
+  bunny.anchor.set(0.5);
+
+  // Move the sprite to the center of the screen
+  bunny.x = app.screen.width / 2;
+  bunny.y = app.screen.height / 2;
+
+  app.stage.addChild(bunny);
+
+  // Listen for animate update
+  app.ticker.add((time) => {
+    // Just for fun, let's rotate mr rabbit a little.
+    // * Delta is 1 if running at 100% performance *
+    // * Creates frame-independent transformation *
+    bunny.rotation += 0.1 * time.deltaTime;
+  });
+};
+
+init();
