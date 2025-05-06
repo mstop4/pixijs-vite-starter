@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "custom.d.ts"],
+  "include": ["src"],
   "exclude": ["dist"]
 }
